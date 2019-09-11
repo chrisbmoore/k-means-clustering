@@ -1,0 +1,20 @@
+{
+  "name": "k-means-clustering",
+  "version": "1.0.0",
+  "description": "K Means clustering Python implementation for school.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisbmoore/k-means-clustering.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrisbmoore/k-means-clustering/issues"
+  },
+  "homepage": "https://github.com/chrisbmoore/k-means-clustering#readme",
+  "devDependencies": {}
+}
