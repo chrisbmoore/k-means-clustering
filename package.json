@@ -16,5 +16,11 @@
     "url": "https://github.com/chrisbmoore/k-means-clustering/issues"
   },
   "homepage": "https://github.com/chrisbmoore/k-means-clustering#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/mathjs": "^6.0.2"
+  },
+  "dependencies": {
+    "mathjs": "^6.2.1",
+    "ml-distance-euclidean": "^2.0.0"
+  }
 }
