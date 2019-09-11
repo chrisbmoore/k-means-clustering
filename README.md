@@ -1,2 +1,2 @@
 # k-means-clustering
-K Means clustering Python implementation for school.
+K Means clustering implementation for school.
