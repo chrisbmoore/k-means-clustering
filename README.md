@@ -1,2 +1,2 @@
 # k-means-clustering
-K Means clustering implementation for school.
+K Means clustering Typescript implementation for school.
