@@ -20,7 +20,7 @@ export class KMeansGenerator {
         //Iterate process until memberships don't change, or a max iterations have been reached.
         let areMembershipsEqual = false;
         for (let i = 0; (!areMembershipsEqual && i < maxIterations); i++) {
-            const updatedMemberships = this.updateMemberships(this._points, this._clusters);
+            const updatedMemberships = this.generateMemberships(this._points, this._clusters);
             this._clusters = this.updateCentroids(this._clusters, updatedMemberships);
             areMembershipsEqual = this.areMembershipsEqual(this._memberships, updatedMemberships);
             this._memberships = updatedMemberships;
@@ -58,7 +58,7 @@ export class KMeansGenerator {
         return centroids;
     }
 
-    private updateMemberships(points: Point[], clusters: Cluster[]): Membership[] {
+    private generateMemberships(points: Point[], clusters: Cluster[]): Membership[] {
         let newMemberships: Membership[] = [];
         points.forEach(point => {
             // For each point, find the nearest Cluster centroid.
@@ -88,7 +88,6 @@ export class KMeansGenerator {
                 .map(membership => membership.point);
             const newCentroid = this.calculateMean(clusterPoints);
             cluster.centroid = newCentroid;
-            return cluster;
         });
         return clusters;
     }

@@ -13,7 +13,6 @@ export class Membership {
 
     equals(membership: Membership): boolean {
         return this.point === membership.point
-            && this.cluster === membership.cluster
-            && this.ratio === membership.ratio;
+            && this.cluster === membership.cluster;
     }
 }
