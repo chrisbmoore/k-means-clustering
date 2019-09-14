@@ -10,18 +10,32 @@ export class KMeansGenerator {
     private _clusters: Cluster[] = [];
     private _dimensions: number;
 
-    constructor(data: number[][], k: number) {
+    constructor(data: number[][], k: number, maxIterations = 10) {
         this._k = k;
         // Convert raw vectors to Points.
         this._points = this.convertDataToPoints(data);
         // Calculate dimensions from Points.
         this._dimensions = this._points.length ? this._points[0].coordinates.length : 0;
         this._clusters = this.initializeClusters(k, this._points);
-        this.updateMemberships(this._points, this._clusters); //TODO reassign _memberships
+        //Iterate process until memberships don't change, or a max iterations have been reached.
+        let areMembershipsEqual = false;
+        for (let i = 0; (!areMembershipsEqual && i < maxIterations); i++) {
+            const updatedMemberships = this.updateMemberships(this._points, this._clusters);
+            this._clusters = this.updateCentroids(this._clusters, updatedMemberships);
+            areMembershipsEqual = this.areMembershipsEqual(this._memberships, updatedMemberships);
+            this._memberships = updatedMemberships;
+        }
+    }
+
+    private areMembershipsEqual(memberships1: Membership[], memberships2: Membership[]) {
+        //If different sizes, not equal.
+        if (memberships1.length !== memberships2.length) return false;
+        //Same if every membership in list 1 exists somewhere in list 2.
+        return memberships1.every(m1 => memberships2.some(m2 => m1.equals(m2)));
     }
 
     private convertDataToPoints(data: number[][]): Point[] {
-        return data.map(d => new Point(...d));
+        return data.map(d => new Point(d));
     }
 
     private initializeClusters(k: number, points: Point[]): Cluster[] {
@@ -44,14 +58,15 @@ export class KMeansGenerator {
         return centroids;
     }
 
-    private updateMemberships(points: Point[], clusters: Cluster[]) { //return copy of memberships
-        this._memberships = [];
+    private updateMemberships(points: Point[], clusters: Cluster[]): Membership[] {
+        let newMemberships: Membership[] = [];
         points.forEach(point => {
             // For each point, find the nearest Cluster centroid.
             const nearestCluster = this.nearestCluster(point, clusters);
             // Change the point to be a full member of that cluster.
-            this._memberships.push(new Membership(point, nearestCluster, 1));
+            newMemberships.push(new Membership(point, nearestCluster, 1));
         });
+        return newMemberships;
     }
 
     private nearestCluster(point: Point, clusters: Cluster[]): Cluster {
@@ -65,5 +80,25 @@ export class KMeansGenerator {
             }
         });
         return nearestCluster;
+    }
+
+    private updateCentroids(clusters: Cluster[], memberships: Membership[]): Cluster[] {
+        clusters.forEach(cluster => {
+            const clusterPoints = memberships.filter(membership => membership.cluster === cluster)
+                .map(membership => membership.point);
+            const newCentroid = this.calculateMean(clusterPoints);
+            cluster.centroid = newCentroid;
+            return cluster;
+        });
+        return clusters;
+    }
+
+    private calculateMean(points: Point[]): Point {
+        const sumPoint = points.reduce((currentSum, point) => {
+            return currentSum.add(point);
+        });
+        const total = points.length;
+        const meanCoordinates = sumPoint.coordinates.map(coordinate => coordinate / total);
+        return new Point(meanCoordinates);
     }
 }

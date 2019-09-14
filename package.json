@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/chrisbmoore/k-means-clustering#readme",
   "devDependencies": {
-    "@types/mathjs": "^6.0.2"
+    "@types/mathjs": "^6.0.2",
+    "@types/plotly.js": "^1.44.10"
   },
   "dependencies": {
     "mathjs": "^6.2.1",
-    "ml-distance-euclidean": "^2.0.0"
+    "ml-distance-euclidean": "^2.0.0",
+    "plotly.js-dist": "^1.49.4"
   }
 }

@@ -10,4 +10,10 @@ export class Membership {
     point: Point;
     cluster: Cluster;
     ratio: number;
+
+    equals(membership: Membership): boolean {
+        return this.point === membership.point
+            && this.cluster === membership.cluster
+            && this.ratio === membership.ratio;
+    }
 }
