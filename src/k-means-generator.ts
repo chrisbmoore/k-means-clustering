@@ -10,6 +10,14 @@ export class KMeansGenerator {
     private _clusters: Cluster[] = [];
     private _dimensions: number;
 
+    get clusters(): { data: number[][] }[] {
+        return this._clusters.map(cluster => {
+            const clusterData = this._memberships.filter(membership => membership.cluster === cluster)
+                .map(membership => membership.point.coordinates);
+            return { data: clusterData };
+        });
+    }
+
     constructor(data: number[][], k: number, maxIterations = 10) {
         this._k = k;
         // Convert raw vectors to Points.
