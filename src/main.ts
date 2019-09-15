@@ -1,12 +1,15 @@
 import { KMeansGenerator } from "./k-means-generator";
 import { PlotData, newPlot } from "plotly.js";
+import jsonData from '../data/synthetic_test_data.json';
 
-const inputData = [[-3, 2], [2, 0], [-6, 4], [-3, -4], [3, 5],
-[-8, -2], [4, 5], [6, -4], [3, 4], [-7, -9]];
-const k = 2;
+const k = 3;
+
+const testData = jsonData.map(dataPoint => {
+    return [dataPoint.x1, dataPoint.x2];
+});
 
 console.log("starting K-means");
-const kMeans = new KMeansGenerator(inputData, k);
+const kMeans = new KMeansGenerator(testData, k);
 const clustersData = kMeans.clusters;
 
 const plots = clustersData.map((clusterData, i) => {
@@ -27,10 +30,10 @@ const plots = clustersData.map((clusterData, i) => {
 
 var layout = {
     xaxis: {
-        range: [-10, 10]
+        range: [-15, 15]
     },
     yaxis: {
-        range: [-10, 10]
+        range: [-15, 15]
     },
     title: 'Clusters'
 };
