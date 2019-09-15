@@ -40,21 +40,23 @@ export class KMeansGenerator {
 
     private initializeClusters(k: number, points: Point[]): Cluster[] {
         const centroids: Point[] = this.initialCentroids(k, points);
-        const clusters: Cluster[] = [...Array(k).keys()].map(i => {
+        const clusters: Cluster[] = [];
+        for (let i = 0; i < k; i++) {
             const cluster = new Cluster();
             cluster.centroid = centroids[i];
-            return cluster;
-        });
+            clusters.push(cluster);
+        }
         return clusters;
     }
 
     private initialCentroids(k: number, points: Point[]): Point[] {
         let possiblePoints = [...points];
-        const centroids: Point[] = [...Array(k).keys()].map(i => {
-            const index = Math.floor(Math.random() * possiblePoints.length);
-            const point = possiblePoints.splice(index, 1)[0]; // Remove the item from the array
-            return point;
-        });
+        const centroids: Point[] = [];
+        for (let i = 0; i < k; i++) {
+            const pointIndex = Math.floor(Math.random() * possiblePoints.length);
+            const point = possiblePoints.splice(pointIndex, 1)[0]; // Remove the item from the array
+            centroids.push(point);
+        }
         return centroids;
     }
 
