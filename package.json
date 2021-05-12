@@ -30,7 +30,7 @@
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
-    "mathjs": "^6.2.1",
+    "mathjs": "^7.5.1",
     "ml-distance-euclidean": "^2.0.0",
     "plotly.js": "^1.49.4"
   }
